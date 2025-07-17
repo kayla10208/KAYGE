@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Medicine Tracker</h1>
+    <p>Input the medicine that you need to take for each day of the week, as you take the medicine, check it off to keep track.</p>
     <div class="accordion accordion-flush" id="accordionFlushExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
@@ -16,7 +17,55 @@
       </button>
     </h2>
     <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+      <div class="accordion-body"> 
+        <div class="accordion-body">
+                        <input type="text" id="categoryInput" placeholder="Enter a category" />
+<button onclick="addCategory()">Add</button>
+
+<div id="categoryList" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;"></div>
+
+<script>
+  function addCategory() {
+    const input = document.getElementById('categoryInput');
+    const value = input.value.trim();
+    if (value === '') return;
+
+    const list = document.getElementById('categoryList');
+
+    const item = document.createElement('div');
+    item.style.display = 'flex';
+    item.style.alignItems = 'center';
+    item.style.border = '1px solid #ccc';
+    item.style.borderRadius = '8px';
+    item.style.padding = '6px 10px';
+    item.style.backgroundColor = '#f1f1f1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.textContent = value;
+    label.style.margin = '0 8px';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.style.marginLeft = '4px';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.background = 'transparent';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '16px';
+    deleteBtn.onclick = () => list.removeChild(item);
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+    input.value = '';
+  }
+</script>
+
+      </div>
     </div>
   </div>
   <div class="accordion-item">
@@ -26,7 +75,52 @@ Monday
       </button>
     </h2>
     <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item’s accordion body. Let’s imagine this being filled with some actual content.</div>
+      <div class="accordion-body"><input type="text" id="categoryInput" placeholder="Enter a category" />
+<button onclick="addCategory()">Add</button>
+
+<div id="categoryList" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;"></div>
+
+<script>
+  function addCategory() {
+    const input = document.getElementById('categoryInput');
+    const value = input.value.trim();
+    if (value === '') return;
+
+    const list = document.getElementById('categoryList');
+
+    const item = document.createElement('div');
+    item.style.display = 'flex';
+    item.style.alignItems = 'center';
+    item.style.border = '1px solid #ccc';
+    item.style.borderRadius = '8px';
+    item.style.padding = '6px 10px';
+    item.style.backgroundColor = '#f1f1f1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.textContent = value;
+    label.style.margin = '0 8px';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.style.marginLeft = '4px';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.background = 'transparent';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '16px';
+    deleteBtn.onclick = () => list.removeChild(item);
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+    input.value = '';
+  }
+</script>
+</div>
     </div>
   </div>
   <div class="accordion-item">
@@ -36,47 +130,272 @@ Tuesday
       </button>
     </h2>
     <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+      <div class="accordion-body"><input type="text" id="categoryInput" placeholder="Enter a category" />
+<button onclick="addCategory()">Add</button>
+
+<div id="categoryList" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;"></div>
+
+<script>
+  function addCategory() {
+    const input = document.getElementById('categoryInput');
+    const value = input.value.trim();
+    if (value === '') return;
+
+    const list = document.getElementById('categoryList');
+
+    const item = document.createElement('div');
+    item.style.display = 'flex';
+    item.style.alignItems = 'center';
+    item.style.border = '1px solid #ccc';
+    item.style.borderRadius = '8px';
+    item.style.padding = '6px 10px';
+    item.style.backgroundColor = '#f1f1f1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.textContent = value;
+    label.style.margin = '0 8px';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.style.marginLeft = '4px';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.background = 'transparent';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '16px';
+    deleteBtn.onclick = () => list.removeChild(item);
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+    input.value = '';
+  }
+</script>
+</div>
     </div>
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
 Wednesday
       </button>
     </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+    <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body"><input type="text" id="categoryInput" placeholder="Enter a category" />
+<button onclick="addCategory()">Add</button>
+
+<div id="categoryList" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;"></div>
+
+<script>
+  function addCategory() {
+    const input = document.getElementById('categoryInput');
+    const value = input.value.trim();
+    if (value === '') return;
+
+    const list = document.getElementById('categoryList');
+
+    const item = document.createElement('div');
+    item.style.display = 'flex';
+    item.style.alignItems = 'center';
+    item.style.border = '1px solid #ccc';
+    item.style.borderRadius = '8px';
+    item.style.padding = '6px 10px';
+    item.style.backgroundColor = '#f1f1f1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.textContent = value;
+    label.style.margin = '0 8px';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.style.marginLeft = '4px';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.background = 'transparent';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '16px';
+    deleteBtn.onclick = () => list.removeChild(item);
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+    input.value = '';
+  }
+</script>
+</div>
     </div>
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseThree">
 Thursday
       </button>
     </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+    <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body"><input type="text" id="categoryInput" placeholder="Enter a category" />
+<button onclick="addCategory()">Add</button>
+
+<div id="categoryList" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;"></div>
+
+<script>
+  function addCategory() {
+    const input = document.getElementById('categoryInput');
+    const value = input.value.trim();
+    if (value === '') return;
+
+    const list = document.getElementById('categoryList');
+
+    const item = document.createElement('div');
+    item.style.display = 'flex';
+    item.style.alignItems = 'center';
+    item.style.border = '1px solid #ccc';
+    item.style.borderRadius = '8px';
+    item.style.padding = '6px 10px';
+    item.style.backgroundColor = '#f1f1f1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.textContent = value;
+    label.style.margin = '0 8px';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.style.marginLeft = '4px';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.background = 'transparent';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '16px';
+    deleteBtn.onclick = () => list.removeChild(item);
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+    input.value = '';
+  }
+</script>
+</div>
     </div>
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseThree">
 Friday
       </button>
     </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+    <div id="flush-collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body"><input type="text" id="categoryInput" placeholder="Enter a category" />
+<button onclick="addCategory()">Add</button>
+
+<div id="categoryList" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;"></div>
+
+<script>
+  function addCategory() {
+    const input = document.getElementById('categoryInput');
+    const value = input.value.trim();
+    if (value === '') return;
+
+    const list = document.getElementById('categoryList');
+
+    const item = document.createElement('div');
+    item.style.display = 'flex';
+    item.style.alignItems = 'center';
+    item.style.border = '1px solid #ccc';
+    item.style.borderRadius = '8px';
+    item.style.padding = '6px 10px';
+    item.style.backgroundColor = '#f1f1f1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.textContent = value;
+    label.style.margin = '0 8px';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.style.marginLeft = '4px';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.background = 'transparent';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '16px';
+    deleteBtn.onclick = () => list.removeChild(item);
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+    input.value = '';
+  }
+</script>
+</div>
     </div>
   </div>
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSeven" aria-expanded="false" aria-controls="flush-collapseThree">
 Saturday
       </button>
     </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+    <div id="flush-collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body"><input type="text" id="categoryInput" placeholder="Enter a category" />
+<button onclick="addCategory()">Add</button>
+
+<div id="categoryList" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;"></div>
+
+<script>
+  function addCategory() {
+    const input = document.getElementById('categoryInput');
+    const value = input.value.trim();
+    if (value === '') return;
+
+    const list = document.getElementById('categoryList');
+
+    const item = document.createElement('div');
+    item.style.display = 'flex';
+    item.style.alignItems = 'center';
+    item.style.border = '1px solid #ccc';
+    item.style.borderRadius = '8px';
+    item.style.padding = '6px 10px';
+    item.style.backgroundColor = '#f1f1f1';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+
+    const label = document.createElement('label');
+    label.textContent = value;
+    label.style.margin = '0 8px';
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.style.marginLeft = '4px';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.background = 'transparent';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.fontSize = '16px';
+    deleteBtn.onclick = () => list.removeChild(item);
+
+    item.appendChild(checkbox);
+    item.appendChild(label);
+    item.appendChild(deleteBtn);
+
+    list.appendChild(item);
+    input.value = '';
+  }
+</script>
+</div>
     </div>
   </div>
 </div>
