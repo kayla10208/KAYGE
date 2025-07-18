@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track your health symptoms with MediTracker">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <title>Symptom Journal | MediTracker</title>
+  <style>
+    :root {
+      --primary-color: #2c7be5;
+      --secondary-color: #6e84a3;
+      --light-bg: #f9fafd;
+      --card-shadow: 0 0.375rem 1.5rem 0 rgba(140, 152, 164, 0.125);
+    }
+    
+    body {
+      background-color: var(--light-bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .navbar {
+      background-color: white;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .navbar-brand {
+      font-weight: 600;
+      color: var(--primary-color) !important;
+    }
+    
+    .nav-link {
+      color: var(--secondary-color);
+      font-weight: 500;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary-color);
+    }
+    
+    .main-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: var(--card-shadow);
+      border: none;
+    }
+    
+    .page-header {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    
+    .symptom-card {
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.125rem 0.375rem rgba(140, 152, 164, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 1rem;
+    }
+    
+    .symptom-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0.25rem 0.75rem rgba(140, 152, 164, 0.15);
+    }
+    
+    .symptom-card.resolved {
+      background-color: #f8fafd;
+    }
+    
+    .symptom-card.resolved .symptom-text {
+      text-decoration: line-through;
+      color: var(--secondary-color);
+    }
+    
+    .timestamp {
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+    }
+    
+    .form-control {
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg sticky-top mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="bi bi-heart-pulse me-2"></i>MediTracker
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="medicinetracker.html">Medicine Tracker</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="symptomtracker.html">Symptom Journal</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container my-5">
+    <div class="main-card p-4">
+      <div class="d-flex align-items-center mb-4">
+        <i class="bi bi-clipboard2-pulse fs-3 text-primary me-3"></i>
+        <h1 class="page-header mb-0">Symptom Journal</h1>
+      </div>
+      
+      <p class="text-muted mb-4">
+        Record your symptoms, their severity, and any patterns you notice. This helps you and your healthcare provider 
+        understand your health better.
+      </p>
+      
+      <div class="mb-4">
+        <label for="symptomEntry" class="form-label fw-semibold">New Symptom Entry</label>
+        <textarea class="form-control mb-3" id="symptomEntry" rows="3" 
+                  placeholder="Describe your symptoms (e.g., 'Headache lasting 2 hours, mild nausea...')"></textarea>
+        <button class="btn btn-primary" onclick="addSymptom()">
+          <i class="bi bi-journal-plus me-2"></i>Add Entry
+        </button>
+      </div>
+      
+      <h2 class="h5 fw-semibold mb-3 text-primary">Your Symptom History</h2>
+      <div id="symptomEntries" class="mt-3"></div>
+    </div>
+  </div>
+
+  <script>
+    function addSymptom() {
+      const textarea = document.getElementById('symptomEntry');
+      const entryText = textarea.value.trim();
+      if (!entryText) return;
+      
+      const now = new Date();
+      const entryId = Date.now();
+      
+      const formattedDate = now.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+      
+      const entriesContainer = document.getElementById('symptomEntries');
+      
+      const card = document.createElement('div');
+      card.className = 'symptom-card card mb-2';
+      card.id = `entry-${entryId}`;
+      
+      card.innerHTML = `
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="flex-grow-1">
+              <div class="timestamp mb-2">${formattedDate}</div>
+              <p class="symptom-text mb-0">${entryText}</p>
+            </div>
+            <div class="d-flex flex-column align-items-end ms-3">
+              <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="resolved-${entryId}" 
+                       onchange="toggleResolved(${entryId})">
+                <label class="form-check-label" for="resolved-${entryId}">Resolved</label>
+              </div>
+              <button class="btn btn-sm btn-outline-danger" onclick="removeEntry(${entryId})">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      entriesContainer.prepend(card);
+      textarea.value = '';
+    }
+    
+    function toggleResolved(id) {
+      const card = document.getElementById(`entry-${id}`);
+      const checkbox = document.getElementById(`resolved-${id}`);
+      
+      if (checkbox.checked) {
+        card.classList.add('resolved');
+      } else {
+        card.classList.remove('resolved');
+      }
+    }
+    
+    function removeEntry(id) {
+      const card = document.getElementById(`entry-${id}`);
+      card.remove();
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
