@@ -7,34 +7,6 @@
   <title>Medicine Tracker</title>
   <style>
     body {
-      
-      background-color: #f8f9fa;
-    }
-    .accordion-button {
-      font-weight: 600;
-    }
-    .pill-entry {
-      display: flex;
-      align-items: center;
-      border: 1px solid #dee2e6;
-      border-radius: 0.5rem;
-      padding: 8px 12px;
-      background-color: #ffffff;
-      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    }
-    .pill-entry label {
-      margin: 0 8px;
-      flex: 1;
-    }
-    .pill-entry button {
-      background: transparent;
-      border: none;
-      color: #dc3545;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    <style>
-    body {
       background-color: #f8f9fa;
     }
 
@@ -70,10 +42,37 @@
       background-color: #fdfdfd;
     }
 
+    .accordion-button {
+      font-weight: 600;
+    }
+
+    .pill-entry {
+      display: flex;
+      align-items: center;
+      border: 1px solid #dee2e6;
+      border-radius: 0.5rem;
+      padding: 8px 12px;
+      background-color: #ffffff;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      margin-bottom: 8px;
+    }
+
+    .pill-entry label {
+      margin: 0 8px;
+      flex: 1;
+    }
+
+    .pill-entry button {
+      background: transparent;
+      border: none;
+      color: #dc3545;
+      font-size: 1rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-<!-- Navbar -->
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-custom shadow-sm">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="#">MediTracker</a>
@@ -84,7 +83,7 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ms-auto">
           <a class="nav-link me-3" href="index.html">Home</a>
-          <a class="nav-link me-3" href="medicinetracker.html">Medicine Tracker</a>
+          <a class="nav-link me-3 active" href="medicinetracker.html">Medicine Tracker</a>
           <a class="nav-link me-3" href="symptomtracker.html">Symptom Tracker</a>
         </div>
       </div>
@@ -93,7 +92,7 @@
 
   <div class="container my-5">
     <div class="bg-white p-4 rounded shadow-sm">
-      <h1 class="mb-3 text-primary">💊 Medicine Tracker</h1>
+      <h1 class="mb-3 text-primary">Medicine Tracker</h1>
       <p class="text-muted">Input the medicine you need to take for each day. Check it off as you take it.</p>
 
       <div class="accordion accordion-flush" id="accordionFlushExample"></div>
@@ -104,46 +103,114 @@
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const accordion = document.getElementById('accordionFlushExample');
 
-    days.forEach((day, index) => {
-      const section = document.createElement('div');
-      section.className = 'accordion-item';
-      section.innerHTML = `
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-${index}" aria-expanded="false">
-            ${day}
-          </button>
-        </h2>
-        <div id="flush-${index}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" id="input-${index}" placeholder="Enter medicine name">
-              <button class="btn btn-outline-primary" onclick="addMedicine(${index})">Add</button>
+    // Load saved medicines from localStorage
+    function loadMedicines() {
+      const savedMedicines = JSON.parse(localStorage.getItem('medicines')) || {};
+      
+      days.forEach((day, index) => {
+        const section = document.createElement('div');
+        section.className = 'accordion-item';
+        section.innerHTML = `
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#flush-${index}" aria-expanded="false">
+              ${day}
+            </button>
+          </h2>
+          <div id="flush-${index}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" id="input-${index}" placeholder="Enter medicine name">
+                <button class="btn btn-outline-primary" onclick="addMedicine(${index})">Add</button>
+              </div>
+              <div id="list-${index}" class="d-flex flex-column gap-2"></div>
             </div>
-            <div id="list-${index}" class="d-flex flex-column gap-2"></div>
           </div>
-        </div>
-      `;
-      accordion.appendChild(section);
-    });
+        `;
+        accordion.appendChild(section);
 
-    function addMedicine(dayIndex) {
-      const input = document.getElementById(`input-${dayIndex}`);
-      const value = input.value.trim();
-      if (!value) return;
+        // Load saved medicines for this day
+        if (savedMedicines[day]) {
+          savedMedicines[day].forEach(medicine => {
+            addMedicineToDOM(day, index, medicine.name, medicine.checked);
+          });
+        }
+      });
+    }
 
+    // Add medicine to the DOM
+    function addMedicineToDOM(day, dayIndex, medicineName, isChecked = false) {
       const list = document.getElementById(`list-${dayIndex}`);
       const item = document.createElement('div');
       item.className = 'pill-entry';
 
       item.innerHTML = `
-        <input type="checkbox" class="form-check-input me-2">
-        <label>${value}</label>
-        <button onclick="this.parentElement.remove()">❌</button>
+        <input type="checkbox" class="form-check-input me-2" ${isChecked ? 'checked' : ''}>
+        <label class="${isChecked ? 'text-decoration-line-through text-muted' : ''}">${medicineName}</label>
+        <button onclick="removeMedicine('${day}', this)">❌</button>
       `;
 
+      // Add event listener for checkbox
+      const checkbox = item.querySelector('input[type="checkbox"]');
+      checkbox.addEventListener('change', function() {
+        updateMedicineStatus(day, medicineName, this.checked);
+        item.querySelector('label').classList.toggle('text-decoration-line-through', this.checked);
+        item.querySelector('label').classList.toggle('text-muted', this.checked);
+      });
+
       list.appendChild(item);
+    }
+
+    // Add new medicine
+    function addMedicine(dayIndex) {
+      const input = document.getElementById(`input-${dayIndex}`);
+      const value = input.value.trim();
+      if (!value) return;
+
+      const day = days[dayIndex];
+      addMedicineToDOM(day, dayIndex, value);
+      saveMedicine(day, value, false);
       input.value = '';
     }
+
+    // Remove medicine
+    function removeMedicine(day, button) {
+      const item = button.parentElement;
+      const medicineName = item.querySelector('label').textContent;
+      item.remove();
+      
+      // Update localStorage
+      const savedMedicines = JSON.parse(localStorage.getItem('medicines')) || {};
+      if (savedMedicines[day]) {
+        savedMedicines[day] = savedMedicines[day].filter(m => m.name !== medicineName);
+        localStorage.setItem('medicines', JSON.stringify(savedMedicines));
+      }
+    }
+
+    // Save medicine to localStorage
+    function saveMedicine(day, name, checked) {
+      const savedMedicines = JSON.parse(localStorage.getItem('medicines')) || {};
+      if (!savedMedicines[day]) {
+        savedMedicines[day] = [];
+      }
+      savedMedicines[day].push({ name, checked });
+      localStorage.setItem('medicines', JSON.stringify(savedMedicines));
+    }
+
+    // Update medicine status in localStorage
+    function updateMedicineStatus(day, name, checked) {
+      const savedMedicines = JSON.parse(localStorage.getItem('medicines')) || {};
+      if (savedMedicines[day]) {
+        const medicine = savedMedicines[day].find(m => m.name === name);
+        if (medicine) {
+          medicine.checked = checked;
+          localStorage.setItem('medicines', JSON.stringify(savedMedicines));
+        }
+      }
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', loadMedicines);
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
